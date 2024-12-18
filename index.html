@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Willkommen auf unserer Seite!</h2>
+        <p>Bitte geben Sie Ihren Namen ein:</p>
+        <form id="nameForm" method="GET" action="/save_name">
+            <input type="text" id="name" name="name" placeholder="Ihr Name" required>
+            <button type="submit">Absenden</button>
+        </form>
+        <p id="responseMessage"></p>
+        <p id="ipMessage"></p>
+    </div>
+
+    <script>
+        const form = document.getElementById('nameForm');
+        const responseMessage = document.getElementById('responseMessage');
+        const ipMessage = document.getElementById('ipMessage');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const response = await fetch(`/save_name?name=${encodeURIComponent(name)}`);
+            const result = await response.json();
+
+            if (result.success) {
+                responseMessage.textContent = `Vielen Dank! Ihr IP: ${result.ip}`;
+                responseMessage.classList.remove('error');
+                responseMessage.classList.add('success');
+                ipMessage.textContent = `Ihr IP wurde erfolgreich gespeichert.`;
+            } else {
+                responseMessage.textContent = `Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.`;
+                responseMessage.classList.remove('success');
+                responseMessage.classList.add('error');
+            }
+        });
+    </script>
+</body>
+</html>
