@@ -81,13 +81,19 @@
     </div>
 
     <script>
-        // Изначальный счетчик
-        let count = 0;
+        // Получаем сохраненный счетчик из localStorage (если он существует)
+        let count = localStorage.getItem('coinCount') ? parseInt(localStorage.getItem('coinCount')) : 0;
+
+        // Отображаем текущий счетчик
+        document.getElementById('counter').innerText = count;
 
         // Функция увеличения счетчика при клике на монетку
         function incrementCounter() {
             count++;
             document.getElementById('counter').innerText = count;
+
+            // Сохраняем текущий счетчик в localStorage
+            localStorage.setItem('coinCount', count);
         }
 
         // Отключаем правый клик мыши (контекстное меню)
