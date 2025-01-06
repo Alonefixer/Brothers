@@ -68,6 +68,13 @@
             color: #FFD700;
         }
 
+        .username {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #FFD700;
+        }
+
     </style>
 </head>
 <body>
@@ -80,7 +87,7 @@
         <div class="coin" id="coin" onclick="incrementCounter()">Fp</div>
 
         <!-- Выводим ник пользователя из Telegram -->
-        <div id="username">Загрузка...</div>
+        <div id="username" class="username">Загрузка...</div>
     </div>
 
     <script>
@@ -93,19 +100,21 @@
             document.getElementById('counter').innerText = count;
         }
 
-        // Функция для отображения ника пользователя или сообщения о необходимости войти через Web App
+        // Функция для отображения ника пользователя из Telegram Web App
         window.onload = function () {
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                // Получаем имя пользователя, если оно доступно
+                // Получаем данные пользователя из Web App
                 const userName = Telegram.WebApp.initDataUnsafe.user.username;
                 
                 if (userName) {
-                    document.getElementById('username').innerText = `${userName}!`;
+                    // Вставляем ник пользователя в элемент
+                    document.getElementById('username').innerText = `Привет, ${userName}!`;
                 } else {
-                    document.getElementById('username').innerText = '-';
+                    // Если имя пользователя отсутствует, показываем сообщение
+                    document.getElementById('username').innerText = 'Привет, Гость!';
                 }
             } else {
-                document.getElementById('username').innerText = '-';
+                document.getElementById('username').innerText = 'Привет, Гость! Пожалуйста, войдите через Web App для получения ника.';
             }
         };
 
