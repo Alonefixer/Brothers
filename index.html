@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FpCoin Кликер</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> <!-- Подключаем красивый шрифт -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            user-select: none; /* Отключаем выделение текста */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .coin {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #FFD700, #FFAA00);
+            border-radius: 50%;
+            color: #4B4B4B;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.1s;
+            user-select: none;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .coin:active {
+            transform: scale(0.9);
+        }
+
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Счетчик монет -->
+        <div class="counter" id="counter">0</div>
+
+        <!-- Изображение монетки с текстом Fp -->
+        <div class="coin" id="coin" onclick="incrementCounter()">Fp</div>
+
+        <!-- Выводим ник пользователя из Telegram -->
+        <div id="username">Загрузка...</div>
+    </div>
+
+    <script>
+        // Изначальный счетчик
+        let count = 0;
+
+        // Функция увеличения счетчика при клике на монетку
+        function incrementCounter() {
+            count++;
+            document.getElementById('counter').innerText = count;
+        }
+
+        // Функция для отображения ника пользователя или сообщения о необходимости войти через Web App
+        window.onload = function () {
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                // Получаем имя пользователя, если оно доступно
+                const userName = Telegram.WebApp.initDataUnsafe.user.username;
+                
+                if (userName) {
+                    document.getElementById('username').innerText = `${userName}!`;
+                } else {
+                    document.getElementById('username').innerText = '-';
+                }
+            } else {
+                document.getElementById('username').innerText = '-';
+            }
+        };
+
+        // Отключаем правый клик мыши (контекстное меню)
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // Отключаем копирование текста
+        document.addEventListener('copy', function (e) {
+            e.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
