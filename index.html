@@ -68,13 +68,6 @@
             color: #FFD700;
         }
 
-        .username {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #FFD700;
-        }
-
     </style>
 </head>
 <body>
@@ -85,9 +78,6 @@
 
         <!-- Изображение монетки с текстом Fp -->
         <div class="coin" id="coin" onclick="incrementCounter()">Fp</div>
-
-        <!-- Выводим ник пользователя из Telegram -->
-        <div id="username" class="username">Загрузка...</div>
     </div>
 
     <script>
@@ -99,26 +89,6 @@
             count++;
             document.getElementById('counter').innerText = count;
         }
-
-        // Функция для отображения ника пользователя из Telegram Web App
-        window.onload = function () {
-            // Проверяем, доступен ли Telegram WebApp
-            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                // Получаем имя пользователя из данных Web App
-                const userName = Telegram.WebApp.initDataUnsafe.user.username;
-                
-                // Если имя пользователя доступно, показываем его
-                if (userName) {
-                    document.getElementById('username').innerText = `Привет, ${userName}!`;
-                } else {
-                    // Если имя пользователя отсутствует, показываем сообщение
-                    document.getElementById('username').innerText = 'Привет, Гость!';
-                }
-            } else {
-                // Если Telegram Web App недоступен, показываем стандартное сообщение
-                document.getElementById('username').innerText = 'Привет, Гость! Пожалуйста, войдите через Web App для получения ника.';
-            }
-        };
 
         // Отключаем правый клик мыши (контекстное меню)
         document.addEventListener('contextmenu', function (e) {
