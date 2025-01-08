@@ -207,11 +207,14 @@
     <script>
         // Функция для определения устройства
         function detectDevice() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            if (/mobile/i.test(userAgent)) {
-                return 'mobile';
+            // Проверка на наличие Telegram WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Пользователь зашел через Telegram WebApp
+                return 'telegram';
+            } else if (/mobile/i.test(navigator.userAgent)) {
+                return 'mobile'; // Мобильное устройство
             }
-            return 'desktop';
+            return 'desktop'; // ПК
         }
 
         // Проверяем устройство при загрузке страницы
@@ -219,7 +222,11 @@
         localStorage.setItem('deviceType', deviceType); // Сохраняем тип устройства в localStorage
 
         // Логика для отображения интерфейса в зависимости от устройства
-        if (deviceType === 'mobile') {
+        if (deviceType === 'telegram') {
+            // Если пользователь зашел через Telegram WebApp
+            document.getElementById('mobileView').style.display = 'block';
+            document.getElementById('desktopView').style.display = 'none';
+        } else if (deviceType === 'mobile') {
             document.getElementById('mobileView').style.display = 'block';
             document.getElementById('desktopView').style.display = 'none';
         } else {
