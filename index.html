@@ -85,32 +85,33 @@
             transform: scale(1.1);
         }
 
-        /* Кнопка "Вывод" */
+        /* Кнопка "Вывод" по центру */
         .withdraw-button {
             position: absolute;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 90px; /* Уменьшена ширина */
-            height: 90px; /* Уменьшена высота */
-            background-color: #B22222; /* Красный цвет */
+            transform: translateX(-50%); /* Центрируем по горизонтали */
+            width: 90px; /* То же размер, что у энергии */
+            height: 90px;
+            background-color: #FF6347; /* Оранжево-красный */
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.3rem; /* Меньший шрифт */
+            font-size: 1.3rem;
             font-weight: bold;
             color: #fff;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .withdraw-button:hover {
-            background-color: #8B0000; /* Темно-красный при наведении */
+            background-color: #FF4500; /* Более темный оттенок при наведении */
         }
 
         .withdraw-button:active {
-            background-color: #FF0000; /* Ярко-красный при нажатии */
+            background-color: #DC143C; /* Еще более темный оттенок при нажатии */
         }
 
         /* Уведомление "Вывод в разработке" */
@@ -148,18 +149,21 @@
                 font-size: 2rem;
             }
 
-            .energy {
+            .energy, .withdraw-button {
                 width: 70px;
                 height: 70px;
                 font-size: 1rem;
+            }
+
+            .energy {
                 left: 10px;
                 bottom: 10px;
             }
 
             .withdraw-button {
-                width: 70px;
-                height: 70px;
-                font-size: 1.2rem;
+                left: 50%;
+                bottom: 10px;
+                transform: translateX(-50%);
             }
         }
     </style>
@@ -175,7 +179,7 @@
     <!-- Круг с энергией -->
     <div class="energy" id="energy">1000</div>
 
-    <!-- Кнопка "Вывод" -->
+    <!-- Кнопка "Вывод" по центру -->
     <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
         Вывод
     </div>
