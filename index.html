@@ -140,16 +140,16 @@
         /* Кнопка "Задание" в правом нижнем углу */
         .task-button {
             position: absolute;
-            bottom: 16px;
-            right: 16px;
-            width: 100px; /* Увеличили размер кнопки */
-            height: 100px; /* Увеличили размер кнопки */
+            bottom: 15px;
+            right: 15px;
+            width: 99px; /* Увеличили размер кнопки */
+            height: 99px; /* Увеличили размер кнопки */
             background-color: #FF6347;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem; /* Увеличили размер шрифта */
+            font-size: 1.3rem; /* Увеличили размер шрифта */
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -254,10 +254,8 @@
         Задание
     </div>
 
-    <!-- Мини-меню для задания -->
-    <div class="task-menu" id="taskMenu">
-        <div class="close-btn" onclick="closeTaskMenu()">×</div>
-        <h2>Задание в разработке</h2>
+    <div class="task-button" id="taskButton" onclick="redirectToSadanie()">
+        Задание
     </div>
 
     <script>
@@ -265,7 +263,7 @@
         let energy = parseInt(localStorage.getItem('energy')) || 1000;
         const maxEnergy = 1000;
         const deviceType = detectDevice();
-
+    
         function detectDevice() {
             if (/mobile/i.test(navigator.userAgent)) {
                 return 'mobile';
@@ -273,12 +271,12 @@
                 return 'desktop';
             }
         }
-
+    
         if (deviceType === 'mobile') {
             energy = 1000;
             localStorage.setItem('energy', energy);
         }
-
+    
         function updateEnergyDisplay() {
             document.getElementById('energy').innerText = energy;
             const energyElement = document.getElementById('energy');
@@ -288,7 +286,7 @@
                 energyElement.classList.remove('low');
             }
         }
-
+    
         function incrementCounter() {
             if (energy > 0) {
                 count++;
@@ -299,7 +297,7 @@
                 localStorage.setItem('energy', energy);
             }
         }
-
+    
         if (deviceType === 'desktop') {
             setInterval(() => {
                 if (energy < maxEnergy) {
@@ -309,7 +307,7 @@
                 }
             }, 3000);
         }
-
+    
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.classList.add('show');
@@ -317,28 +315,35 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-
+    
         function openTaskMenu() {
             const taskMenu = document.getElementById('taskMenu');
             taskMenu.classList.add('show');
         }
-
+    
         function closeTaskMenu() {
             const taskMenu = document.getElementById('taskMenu');
             taskMenu.classList.remove('show');
         }
-
+    
+        // Add redirection function
+        function redirectToSadanie() {
+            window.location.href = "sadanie.html";  // Redirects to sadanie.html
+        }
+    
+        // Update counter and energy display when the page loads
         document.getElementById('counter').innerText = count;
         updateEnergyDisplay();
-
+    
+        // Disable right-click menu and copy actions
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
-
+    
         document.addEventListener('copy', function (e) {
             e.preventDefault();
         });
-    </script>
+    </script>    
 
 </body>
 </html>
