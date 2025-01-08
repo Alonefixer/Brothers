@@ -85,7 +85,6 @@
             transform: scale(1.1);
         }
 
-        /* Кнопка "Вывод" по центру */
         .withdraw-button {
             position: absolute;
             bottom: 16px;
@@ -114,7 +113,6 @@
             background-color: #DC143C;
         }
 
-        /* Уведомление "Вывод в разработке" */
         .notification {
             position: absolute;
             top: -50px;
@@ -138,7 +136,10 @@
             top: 70px;
         }
 
-        /* Адаптивность для мобильных устройств */
+        .desktop-view {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .coin {
                 width: 180px;
@@ -165,59 +166,9 @@
                 bottom: 10px;
                 transform: translateX(-50%);
             }
-
-            .notification {
-                font-size: 1.2rem;
-                top: 80px;
-            }
         }
 
-        @media (max-width: 480px) {
-            .counter {
-                font-size: 1.8rem;
-            }
-
-            .coin {
-                width: 160px;
-                height: 160px;
-            }
-
-            .energy {
-                width: 60px;
-                height: 60px;
-                font-size: 1rem;
-            }
-
-            .withdraw-button {
-                width: 60px;
-                height: 60px;
-                font-size: 1rem;
-            }
-
-            .notification {
-                font-size: 1rem;
-                padding: 8px 16px;
-            }
-        }
-
-        /* Скрытие интерфейса для ПК */
-        .desktop-view {
-            display: none;
-        }
-
-        /* Показываем интерфейс только для мобильных устройств */
-        @media (max-width: 768px) {
-            .mobile-view {
-                display: block;
-            }
-        }
-
-        /* Для ПК отображаем картинку */
         @media (min-width: 769px) {
-            .mobile-view {
-                display: none;
-            }
-
             .desktop-view {
                 display: block;
                 background: url('assets/pk.jpg') center/cover no-repeat;
@@ -231,43 +182,56 @@
                 font-size: 2rem;
                 font-weight: bold;
             }
+            .mobile-view {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- Интерфейс для мобильных -->
-    <div class="mobile-view">
-        <!-- Счетчик монет -->
+    <div class="mobile-view" id="mobileView">
         <div class="counter" id="counter">0</div>
-
-        <!-- Изображение монетки -->
         <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
-
-        <!-- Круг с энергией -->
         <div class="energy" id="energy">1000</div>
-
-        <!-- Кнопка "Вывод" по центру -->
-        <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
-            Вывод
-        </div>
-
-        <!-- Уведомление -->
-        <div class="notification" id="notification">
-            Вывод в разработке
-        </div>
+        <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">Вывод</div>
+        <div class="notification" id="notification">Вывод в разработке</div>
     </div>
 
     <!-- Интерфейс для ПК -->
-    <div class="desktop-view">
+    <div class="desktop-view" id="desktopView">
+        Доступ к игре с ПК ограничен. Пожалуйста, используйте мобильное устройство.
     </div>
 
     <script>
+        // Функция для определения устройства
+        function detectDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (/mobile/i.test(userAgent)) {
+                return 'mobile';
+            }
+            return 'desktop';
+        }
+
+        // Проверяем устройство при загрузке страницы
+        const deviceType = detectDevice();
+        localStorage.setItem('deviceType', deviceType); // Сохраняем тип устройства в localStorage
+
+        // Логика для отображения интерфейса в зависимости от устройства
+        if (deviceType === 'mobile') {
+            document.getElementById('mobileView').style.display = 'block';
+            document.getElementById('desktopView').style.display = 'none';
+        } else {
+            document.getElementById('mobileView').style.display = 'none';
+            document.getElementById('desktopView').style.display = 'block';
+        }
+
+        // Логика для работы с интерфейсом
         let count = parseInt(localStorage.getItem('count')) || 0;
         let energy = parseInt(localStorage.getItem('energy')) || 1000;
         const maxEnergy = 1000;
 
-        // Обновляем текст энергии
         function updateEnergyDisplay() {
             document.getElementById('energy').innerText = energy;
             const energyElement = document.getElementById('energy');
@@ -278,7 +242,6 @@
             }
         }
 
-        // Увеличение счетчика при клике на монетку
         function incrementCounter() {
             if (energy > 0) {
                 count++;
@@ -290,7 +253,6 @@
             }
         }
 
-        // Восстановление энергии каждую секунду
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy++;
@@ -299,25 +261,21 @@
             }
         }, 3000);
 
-        // Функция для показа уведомления
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.classList.add('show');
-
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
 
-        document.getElementById('counter').innerText = count;
         updateEnergyDisplay();
+        document.getElementById('counter').innerText = count;
 
-        // Отключаем правый клик мыши
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
 
-        // Отключаем копирование текста
         document.addEventListener('copy', function (e) {
             e.preventDefault();
         });
