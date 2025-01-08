@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #440000, #8B0000, #300000);
+            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000);
             color: white;
             height: 100vh;
             display: flex;
@@ -37,12 +37,13 @@
             align-items: center;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .coin:hover {
             transform: scale(1.1);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
         }
 
         .coin:active {
@@ -57,16 +58,16 @@
             top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
         }
 
         .energy {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            bottom: 15px;
+            left: 15px;
             width: 90px;
             height: 90px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(30, 30, 30, 0.9);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -74,14 +75,66 @@
             font-size: 1.4rem;
             font-weight: bold;
             color: #FFD700;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .energy.low {
-            background: rgba(255, 0, 0, 0.8);
+            background: rgba(139, 0, 0, 0.9);
             transform: scale(1.1);
+        }
+
+        /* Кнопка "Вывод" */
+        .withdraw-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px; /* Уменьшена ширина */
+            height: 90px; /* Уменьшена высота */
+            background-color: #B22222; /* Красный цвет */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem; /* Меньший шрифт */
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .withdraw-button:hover {
+            background-color: #8B0000; /* Темно-красный при наведении */
+        }
+
+        .withdraw-button:active {
+            background-color: #FF0000; /* Ярко-красный при нажатии */
+        }
+
+        /* Уведомление "Вывод в разработке" */
+        .notification {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 69, 0, 0.9); /* Красный с оранжевым оттенком */
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, top 1s ease-in-out;
+        }
+
+        .notification.show {
+            display: block;
+            opacity: 1;
+            top: 70px; /* Отправляем вниз на уровень счёта */
         }
 
         /* Адаптивность для мобильных устройств */
@@ -99,8 +152,14 @@
                 width: 70px;
                 height: 70px;
                 font-size: 1rem;
-                left: 15px;
-                bottom: 15px;
+                left: 10px;
+                bottom: 10px;
+            }
+
+            .withdraw-button {
+                width: 70px;
+                height: 70px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -111,10 +170,20 @@
     <div class="counter" id="counter">0</div>
 
     <!-- Изображение монетки -->
-    <div class="coin" id="coin" onclick="incrementCounter()"></div>
+    <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
 
     <!-- Круг с энергией -->
     <div class="energy" id="energy">1000</div>
+
+    <!-- Кнопка "Вывод" -->
+    <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
+        Вывод
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        Вывод в разработке
+    </div>
 
     <script>
         let count = parseInt(localStorage.getItem('count')) || 0; // Восстанавливаем счётчик
@@ -152,6 +221,17 @@
                 localStorage.setItem('energy', energy); // Сохраняем энергию
             }
         }, 1000);
+
+        // Функция для показа уведомления
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show'); // Добавляем класс для показа уведомления
+
+            // Через 3 секунды скрыть уведомление
+            setTimeout(() => {
+                notification.classList.remove('show'); // Убираем класс для скрытия
+            }, 3000); // Уведомление исчезает через 3 секунды
+        }
 
         // Восстанавливаем состояние при загрузке
         document.getElementById('counter').innerText = count;
