@@ -90,10 +90,10 @@
             position: absolute;
             bottom: 16px;
             left: 50%;
-            transform: translateX(-50%); /* Центрируем по горизонтали */
-            width: 90px; /* То же размер, что у энергии */
+            transform: translateX(-50%);
+            width: 90px;
             height: 90px;
-            background-color: #FF6347; /* Оранжево-красный */
+            background-color: #FF6347;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -107,20 +107,19 @@
         }
 
         .withdraw-button:hover {
-            background-color: #FF4500; /* Более темный оттенок при наведении */
+            background-color: #FF4500;
         }
 
         .withdraw-button:active {
-            background-color: #DC143C; /* Еще более темный оттенок при нажатии */
+            background-color: #DC143C;
         }
 
-        /* Уведомление "Вывод в разработке" */
         .notification {
             position: absolute;
             top: -50px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(255, 69, 0, 0.9); /* Красный с оранжевым оттенком */
+            background-color: rgba(255, 69, 0, 0.9);
             color: white;
             font-size: 1.5rem;
             font-weight: bold;
@@ -135,10 +134,79 @@
         .notification.show {
             display: block;
             opacity: 1;
-            top: 70px; /* Отправляем вниз на уровень счёта */
+            top: 70px;
         }
 
-        /* Адаптивность для мобильных устройств */
+        /* Кнопка "Задание" в правом нижнем углу */
+        .task-button {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 100px; /* Увеличили размер кнопки */
+            height: 100px; /* Увеличили размер кнопки */
+            background-color: #FF6347;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem; /* Увеличили размер шрифта */
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .task-button:hover {
+            background-color: #FF4500;
+        }
+
+        .task-button:active {
+            background-color: #DC143C;
+        }
+
+        /* Мини-меню для задания */
+        .task-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+            padding: 30px; /* Увеличили padding */
+            border-radius: 12px; /* Сделали углы чуть более округлыми */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            width: 300px; /* Увеличили ширину контейнера */
+        }
+
+        .task-menu.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .task-menu .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 1.8rem; /* Увеличили размер крестика */
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .task-menu .close-btn:hover {
+            color: #FF6347;
+        }
+
+        .task-menu h2 {
+            font-size: 1.6rem; /* Увеличили размер шрифта заголовка */
+            margin-top: 20px;
+        }
+
+        /* Адаптивность */
         @media (max-width: 768px) {
             .coin {
                 width: 180px;
@@ -149,122 +217,124 @@
                 font-size: 2rem;
             }
 
-            .energy, .withdraw-button {
+            .energy, .withdraw-button, .task-button {
                 width: 70px;
                 height: 70px;
                 font-size: 1rem;
             }
 
-            .energy {
-                left: 10px;
-                bottom: 10px;
+            .task-menu {
+                padding: 20px;
+                width: 250px; /* Немного уменьшили размер контейнера на мобильных */
             }
 
-            .withdraw-button {
-                left: 50%;
-                bottom: 10px;
-                transform: translateX(-50%);
+            .task-menu h2 {
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Счетчик монет -->
     <div class="counter" id="counter">0</div>
 
-    <!-- Изображение монетки -->
     <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
 
-    <!-- Круг с энергией -->
     <div class="energy" id="energy">1000</div>
 
-    <!-- Кнопка "Вывод" по центру -->
     <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
         Вывод
     </div>
 
-    <!-- Уведомление -->
     <div class="notification" id="notification">
         Вывод в разработке
     </div>
 
-    <script>
-        let count = parseInt(localStorage.getItem('count')) || 0; // Восстанавливаем счётчик
-        let energy = parseInt(localStorage.getItem('energy')) || 1000; // Восстанавливаем энергию
-        const maxEnergy = 1000; // Максимальное значение энергии
-        const deviceType = detectDevice(); // Проверка устройства
+    <div class="task-button" id="taskButton" onclick="openTaskMenu()">
+        Задание
+    </div>
 
-        // Функция для определения устройства
+    <!-- Мини-меню для задания -->
+    <div class="task-menu" id="taskMenu">
+        <div class="close-btn" onclick="closeTaskMenu()">×</div>
+        <h2>Задание в разработке</h2>
+    </div>
+
+    <script>
+        let count = parseInt(localStorage.getItem('count')) || 0;
+        let energy = parseInt(localStorage.getItem('energy')) || 1000;
+        const maxEnergy = 1000;
+        const deviceType = detectDevice();
+
         function detectDevice() {
             if (/mobile/i.test(navigator.userAgent)) {
-                return 'mobile'; // Если мобильное устройство
+                return 'mobile';
             } else {
-                return 'desktop'; // Если ПК
+                return 'desktop';
             }
         }
 
-        // Устанавливаем энергию на 1000, если зашли с мобильного устройства
         if (deviceType === 'mobile') {
             energy = 1000;
-            localStorage.setItem('energy', energy); // Сохраняем энергию
+            localStorage.setItem('energy', energy);
         }
 
-        // Обновляем текст энергии
         function updateEnergyDisplay() {
             document.getElementById('energy').innerText = energy;
             const energyElement = document.getElementById('energy');
             if (energy < 200) {
-                energyElement.classList.add('low'); // Класс для низкой энергии
+                energyElement.classList.add('low');
             } else {
                 energyElement.classList.remove('low');
             }
         }
 
-        // Увеличение счетчика при клике на монетку
         function incrementCounter() {
             if (energy > 0) {
                 count++;
                 energy--;
                 document.getElementById('counter').innerText = count;
                 updateEnergyDisplay();
-                localStorage.setItem('count', count); // Сохраняем счётчик
-                localStorage.setItem('energy', energy); // Сохраняем энергию
+                localStorage.setItem('count', count);
+                localStorage.setItem('energy', energy);
             }
         }
 
-        // Восстановление энергии каждую секунду для ПК
         if (deviceType === 'desktop') {
             setInterval(() => {
                 if (energy < maxEnergy) {
                     energy++;
                     updateEnergyDisplay();
-                    localStorage.setItem('energy', energy); // Сохраняем энергию
+                    localStorage.setItem('energy', energy);
                 }
-            }, 3000); // Энергия восстанавливается каждые 1000 мс (1 секунда)
+            }, 3000);
         }
 
-        // Функция для показа уведомления
         function showNotification() {
             const notification = document.getElementById('notification');
-            notification.classList.add('show'); // Добавляем класс для показа уведомления
-
-            // Через 3 секунды скрыть уведомление
+            notification.classList.add('show');
             setTimeout(() => {
-                notification.classList.remove('show'); // Убираем класс для скрытия
-            }, 3000); // Уведомление исчезает через 3 секунды
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        // Восстанавливаем состояние при загрузке
+        function openTaskMenu() {
+            const taskMenu = document.getElementById('taskMenu');
+            taskMenu.classList.add('show');
+        }
+
+        function closeTaskMenu() {
+            const taskMenu = document.getElementById('taskMenu');
+            taskMenu.classList.remove('show');
+        }
+
         document.getElementById('counter').innerText = count;
         updateEnergyDisplay();
 
-        // Отключаем правый клик мыши
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
 
-        // Отключаем копирование текста
         document.addEventListener('copy', function (e) {
             e.preventDefault();
         });
