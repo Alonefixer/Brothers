@@ -18,6 +18,8 @@
             flex-direction: column;
             overflow: hidden;
             user-select: none;
+            margin: 0;
+            padding: 0;
         }
 
         .back-button {
@@ -26,12 +28,12 @@
             left: 20px;
             background-color: #FF6347;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: white;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
@@ -47,15 +49,16 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             margin-top: 50px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
             color: #FFD700;
+            margin-bottom: 20px;
         }
 
         .balance-info {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-top: 20px;
             color: #FFD700;
             font-weight: bold;
@@ -65,14 +68,15 @@
         .task-list {
             list-style: none;
             padding: 0;
-            margin-top: 40px;
-            font-size: 1.5rem;
+            margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: bold;
             text-align: left;
+            width: 80%;
         }
 
         .task-item {
-            margin: 20px 0;
+            margin: 15px 0;
             cursor: pointer;
             transition: color 0.3s ease, transform 0.2s ease;
         }
@@ -87,7 +91,7 @@
         }
 
         .reward {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #FFD700;
         }
 
@@ -96,7 +100,7 @@
             color: white;
             border: none;
             padding: 10px 20px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -118,9 +122,59 @@
 
         .completed-message {
             color: #FFD700;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             margin-top: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .balance-info {
+                font-size: 1.1rem;
+            }
+
+            .task-list {
+                width: 90%;
+            }
+
+            .task-item {
+                font-size: 1rem;
+            }
+
+            .reward {
+                font-size: 0.9rem;
+            }
+
+            .claim-button {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+
+            .back-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+
+        /* For very small screens (e.g., portrait phones) */
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .balance-info {
+                font-size: 1rem;
+            }
+
+            .claim-button {
+                font-size: 0.85rem;
+                padding: 7px 14px;
+            }
         }
 
     </style>
