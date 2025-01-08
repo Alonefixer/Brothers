@@ -140,6 +140,10 @@
             display: none;
         }
 
+        .telegram-view {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .coin {
                 width: 180px;
@@ -182,9 +186,6 @@
                 font-size: 2rem;
                 font-weight: bold;
             }
-            .mobile-view {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -204,13 +205,17 @@
         Доступ к игре с ПК ограничен. Пожалуйста, используйте мобильное устройство.
     </div>
 
+    <!-- Интерфейс для Telegram WebApp -->
+    <div class="telegram-view" id="telegramView">
+        Вы зашли через Telegram WebApp.
+    </div>
+
     <script>
         // Функция для определения устройства
         function detectDevice() {
             // Проверка на наличие Telegram WebApp
             if (window.Telegram && window.Telegram.WebApp) {
-                // Пользователь зашел через Telegram WebApp
-                return 'telegram';
+                return 'telegram'; // Заход через Telegram WebApp
             } else if (/mobile/i.test(navigator.userAgent)) {
                 return 'mobile'; // Мобильное устройство
             }
@@ -219,19 +224,21 @@
 
         // Проверяем устройство при загрузке страницы
         const deviceType = detectDevice();
-        localStorage.setItem('deviceType', deviceType); // Сохраняем тип устройства в localStorage
 
         // Логика для отображения интерфейса в зависимости от устройства
         if (deviceType === 'telegram') {
             // Если пользователь зашел через Telegram WebApp
-            document.getElementById('mobileView').style.display = 'block';
+            document.getElementById('telegramView').style.display = 'block';
+            document.getElementById('mobileView').style.display = 'none';
             document.getElementById('desktopView').style.display = 'none';
         } else if (deviceType === 'mobile') {
             document.getElementById('mobileView').style.display = 'block';
             document.getElementById('desktopView').style.display = 'none';
+            document.getElementById('telegramView').style.display = 'none';
         } else {
             document.getElementById('mobileView').style.display = 'none';
             document.getElementById('desktopView').style.display = 'block';
+            document.getElementById('telegramView').style.display = 'none';
         }
 
         // Логика для работы с интерфейсом
