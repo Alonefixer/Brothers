@@ -193,6 +193,22 @@
         let count = parseInt(localStorage.getItem('count')) || 0; // Восстанавливаем счётчик
         let energy = parseInt(localStorage.getItem('energy')) || 1000; // Восстанавливаем энергию
         const maxEnergy = 1000; // Максимальное значение энергии
+        const deviceType = detectDevice(); // Проверка устройства
+
+        // Функция для определения устройства
+        function detectDevice() {
+            if (/mobile/i.test(navigator.userAgent)) {
+                return 'mobile'; // Если мобильное устройство
+            } else {
+                return 'desktop'; // Если ПК
+            }
+        }
+
+        // Устанавливаем энергию на 1000, если зашли с мобильного устройства
+        if (deviceType === 'mobile') {
+            energy = 1000;
+            localStorage.setItem('energy', energy); // Сохраняем энергию
+        }
 
         // Обновляем текст энергии
         function updateEnergyDisplay() {
@@ -217,14 +233,16 @@
             }
         }
 
-        // Восстановление энергии каждую секунду
-        setInterval(() => {
-            if (energy < maxEnergy) {
-                energy++;
-                updateEnergyDisplay();
-                localStorage.setItem('energy', energy); // Сохраняем энергию
-            }
-        }, 3000); // Энергия восстанавливается каждые 1000 мс (1 секунда)
+        // Восстановление энергии каждую секунду для ПК
+        if (deviceType === 'desktop') {
+            setInterval(() => {
+                if (energy < maxEnergy) {
+                    energy++;
+                    updateEnergyDisplay();
+                    localStorage.setItem('energy', energy); // Сохраняем энергию
+                }
+            }, 3000); // Энергия восстанавливается каждые 1000 мс (1 секунда)
+        }
 
         // Функция для показа уведомления
         function showNotification() {
