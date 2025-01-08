@@ -90,10 +90,10 @@
             position: absolute;
             bottom: 16px;
             left: 50%;
-            transform: translateX(-50%); /* Центрируем по горизонтали */
-            width: 90px; /* То же размер, что у энергии */
+            transform: translateX(-50%);
+            width: 90px;
             height: 90px;
-            background-color: #FF6347; /* Оранжево-красный */
+            background-color: #FF6347;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -107,11 +107,11 @@
         }
 
         .withdraw-button:hover {
-            background-color: #FF4500; /* Более темный оттенок при наведении */
+            background-color: #FF4500;
         }
 
         .withdraw-button:active {
-            background-color: #DC143C; /* Еще более темный оттенок при нажатии */
+            background-color: #DC143C;
         }
 
         /* Уведомление "Вывод в разработке" */
@@ -120,7 +120,7 @@
             top: -50px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(255, 69, 0, 0.9); /* Красный с оранжевым оттенком */
+            background-color: rgba(255, 69, 0, 0.9);
             color: white;
             font-size: 1.5rem;
             font-weight: bold;
@@ -135,7 +135,7 @@
         .notification.show {
             display: block;
             opacity: 1;
-            top: 70px; /* Отправляем вниз на уровень счёта */
+            top: 70px;
         }
 
         /* Адаптивность для мобильных устройств */
@@ -165,41 +165,114 @@
                 bottom: 10px;
                 transform: translateX(-50%);
             }
+
+            .notification {
+                font-size: 1.2rem;
+                top: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .counter {
+                font-size: 1.8rem;
+            }
+
+            .coin {
+                width: 160px;
+                height: 160px;
+            }
+
+            .energy {
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+
+            .withdraw-button {
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+
+            .notification {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Скрытие интерфейса для ПК */
+        .desktop-view {
+            display: none;
+        }
+
+        /* Показываем интерфейс только для мобильных устройств */
+        @media (max-width: 768px) {
+            .mobile-view {
+                display: block;
+            }
+        }
+
+        /* Для ПК отображаем картинку */
+        @media (min-width: 769px) {
+            .mobile-view {
+                display: none;
+            }
+
+            .desktop-view {
+                display: block;
+                background: url('assets/pk.jpg') center/cover no-repeat;
+                width: 100vw;
+                height: 100vh;
+                background-size: cover;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 2rem;
+                font-weight: bold;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Счетчик монет -->
-    <div class="counter" id="counter">0</div>
+    <!-- Интерфейс для мобильных -->
+    <div class="mobile-view">
+        <!-- Счетчик монет -->
+        <div class="counter" id="counter">0</div>
 
-    <!-- Изображение монетки -->
-    <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
+        <!-- Изображение монетки -->
+        <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
 
-    <!-- Круг с энергией -->
-    <div class="energy" id="energy">1000</div>
+        <!-- Круг с энергией -->
+        <div class="energy" id="energy">1000</div>
 
-    <!-- Кнопка "Вывод" по центру -->
-    <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
-        Вывод
+        <!-- Кнопка "Вывод" по центру -->
+        <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
+            Вывод
+        </div>
+
+        <!-- Уведомление -->
+        <div class="notification" id="notification">
+            Вывод в разработке
+        </div>
     </div>
 
-    <!-- Уведомление -->
-    <div class="notification" id="notification">
-        Вывод в разработке
+    <!-- Интерфейс для ПК -->
+    <div class="desktop-view">
     </div>
 
     <script>
-        let count = parseInt(localStorage.getItem('count')) || 0; // Восстанавливаем счётчик
-        let energy = parseInt(localStorage.getItem('energy')) || 1000; // Восстанавливаем энергию
-        const maxEnergy = 1000; // Максимальное значение энергии
+        let count = parseInt(localStorage.getItem('count')) || 0;
+        let energy = parseInt(localStorage.getItem('energy')) || 1000;
+        const maxEnergy = 1000;
 
         // Обновляем текст энергии
         function updateEnergyDisplay() {
             document.getElementById('energy').innerText = energy;
             const energyElement = document.getElementById('energy');
             if (energy < 200) {
-                energyElement.classList.add('low'); // Класс для низкой энергии
+                energyElement.classList.add('low');
             } else {
                 energyElement.classList.remove('low');
             }
@@ -212,8 +285,8 @@
                 energy--;
                 document.getElementById('counter').innerText = count;
                 updateEnergyDisplay();
-                localStorage.setItem('count', count); // Сохраняем счётчик
-                localStorage.setItem('energy', energy); // Сохраняем энергию
+                localStorage.setItem('count', count);
+                localStorage.setItem('energy', energy);
             }
         }
 
@@ -222,22 +295,20 @@
             if (energy < maxEnergy) {
                 energy++;
                 updateEnergyDisplay();
-                localStorage.setItem('energy', energy); // Сохраняем энергию
+                localStorage.setItem('energy', energy);
             }
-        }, 1000);
+        }, 3000);
 
         // Функция для показа уведомления
         function showNotification() {
             const notification = document.getElementById('notification');
-            notification.classList.add('show'); // Добавляем класс для показа уведомления
+            notification.classList.add('show');
 
-            // Через 3 секунды скрыть уведомление
             setTimeout(() => {
-                notification.classList.remove('show'); // Убираем класс для скрытия
-            }, 3000); // Уведомление исчезает через 3 секунды
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        // Восстанавливаем состояние при загрузке
         document.getElementById('counter').innerText = count;
         updateEnergyDisplay();
 
