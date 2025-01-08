@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000);
-            color: white;
+            background: black; /* Черный фон */
+            color: red; /* Красный текст */
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,9 +24,18 @@
             overflow: hidden;
             user-select: none;
             position: relative;
-            transition: background 0.5s ease;
         }
 
+        /* Обертка для кнопок */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Отступы между кнопками */
+        }
+
+        /* Стили монетки */
         .coin {
             width: 240px;
             height: 240px;
@@ -85,11 +94,8 @@
             transform: scale(1.1);
         }
 
+        /* Кнопка "Вывод" */
         .withdraw-button {
-            position: absolute;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 90px;
             height: 90px;
             background-color: #FF6347;
@@ -113,6 +119,7 @@
             background-color: #DC143C;
         }
 
+        /* Уведомление */
         .notification {
             position: absolute;
             top: -50px;
@@ -136,14 +143,7 @@
             top: 70px;
         }
 
-        .desktop-view {
-            display: none;
-        }
-
-        .telegram-view {
-            display: none;
-        }
-
+        /* Адаптивность для мобильных устройств */
         @media (max-width: 768px) {
             .coin {
                 width: 180px;
@@ -171,81 +171,63 @@
                 transform: translateX(-50%);
             }
         }
-
-        @media (min-width: 769px) {
-            .desktop-view {
-                display: block;
-                background: url('assets/pk.jpg') center/cover no-repeat;
-                width: 100vw;
-                height: 100vh;
-                background-size: cover;
-                color: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 2rem;
-                font-weight: bold;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Интерфейс для мобильных -->
-    <div class="mobile-view" id="mobileView">
+    <!-- Сообщение о доступе с ПК -->
+    <div class="notification" id="notification">
+        Зайдите с телефона!
+    </div>
+
+    <!-- Контейнер для кнопок -->
+    <div class="button-container">
+        <!-- Счетчик монет -->
         <div class="counter" id="counter">0</div>
+
+        <!-- Изображение монетки -->
         <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
+
+        <!-- Круг с энергией -->
         <div class="energy" id="energy">1000</div>
-        <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">Вывод</div>
-        <div class="notification" id="notification">Вывод в разработке</div>
-    </div>
 
-    <!-- Интерфейс для ПК -->
-    <div class="desktop-view" id="desktopView">
-        Доступ к игре с ПК ограничен. Пожалуйста, используйте мобильное устройство.
-    </div>
-
-    <!-- Интерфейс для Telegram WebApp -->
-    <div class="telegram-view" id="telegramView">
-        Вы зашли через Telegram WebApp.
+        <!-- Кнопка "Вывод" -->
+        <div class="withdraw-button" id="withdrawButton" onclick="showNotification()">
+            Вывод
+        </div>
     </div>
 
     <script>
-        // Функция для определения устройства
+        let count = parseInt(localStorage.getItem('count')) || 0;
+        let energy = parseInt(localStorage.getItem('energy')) || 1000;
+        const maxEnergy = 1000;
+
+        // Функция для проверки устройства
         function detectDevice() {
-            // Проверка на наличие Telegram WebApp
-            if (window.Telegram && window.Telegram.WebApp) {
-                return 'telegram'; // Заход через Telegram WebApp
-            } else if (/mobile/i.test(navigator.userAgent)) {
+            if (/mobile/i.test(navigator.userAgent)) {
                 return 'mobile'; // Мобильное устройство
+            } else {
+                return 'desktop'; // ПК
             }
-            return 'desktop'; // ПК
         }
 
         // Проверяем устройство при загрузке страницы
         const deviceType = detectDevice();
 
         // Логика для отображения интерфейса в зависимости от устройства
-        if (deviceType === 'telegram') {
-            // Если пользователь зашел через Telegram WebApp
-            document.getElementById('telegramView').style.display = 'block';
-            document.getElementById('mobileView').style.display = 'none';
-            document.getElementById('desktopView').style.display = 'none';
-        } else if (deviceType === 'mobile') {
-            document.getElementById('mobileView').style.display = 'block';
-            document.getElementById('desktopView').style.display = 'none';
-            document.getElementById('telegramView').style.display = 'none';
+        if (deviceType === 'desktop') {
+            // Если это ПК, показываем сообщение и скрываем контент
+            document.getElementById('notification').classList.add('show');
+            document.getElementById('coin').style.display = 'none';
+            document.getElementById('counter').style.display = 'none';
+            document.getElementById('energy').style.display = 'none';
+            document.getElementById('withdrawButton').style.display = 'none';
         } else {
-            document.getElementById('mobileView').style.display = 'none';
-            document.getElementById('desktopView').style.display = 'block';
-            document.getElementById('telegramView').style.display = 'none';
+            // Если мобильное устройство, показываем контент
+            document.getElementById('notification').classList.remove('show');
         }
 
-        // Логика для работы с интерфейсом
-        let count = parseInt(localStorage.getItem('count')) || 0;
-        let energy = parseInt(localStorage.getItem('energy')) || 1000;
-        const maxEnergy = 1000;
-
+        // Обновляем текст энергии
         function updateEnergyDisplay() {
             document.getElementById('energy').innerText = energy;
             const energyElement = document.getElementById('energy');
@@ -256,6 +238,7 @@
             }
         }
 
+        // Увеличение счетчика при клике на монетку
         function incrementCounter() {
             if (energy > 0) {
                 count++;
@@ -267,6 +250,7 @@
             }
         }
 
+        // Восстановление энергии каждую секунду
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy++;
@@ -275,21 +259,25 @@
             }
         }, 3000);
 
+        // Функция для показа уведомления
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.classList.add('show');
+
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
 
-        updateEnergyDisplay();
         document.getElementById('counter').innerText = count;
+        updateEnergyDisplay();
 
+        // Отключаем правый клик мыши
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
 
+        // Отключаем копирование текста
         document.addEventListener('copy', function (e) {
             e.preventDefault();
         });
