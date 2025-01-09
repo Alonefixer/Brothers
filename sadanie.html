@@ -202,6 +202,11 @@
             <button class="claim-button" id="claimChat" onclick="claimReward('Подписка на чат', 'https://t.me/Novosti_MysticalCoin', 'claimChat', 'task2')">Забрать награду</button>
             <span id="completedMessage2" class="completed-message" style="display:none;">Задание выполнено</span>
         </li>
+        <li class="task-item" id="task3">
+            Подписка на GramAdvanceChat <span class="reward">- 3000 кликов</span>
+            <button class="claim-button" id="claimGramAdvanceChat" onclick="claimReward('Подписка на GramAdvanceChat', 'https://t.me/GramAdvanceChat', 'claimGramAdvanceChat', 'task3')">Забрать награду</button>
+            <span id="completedMessage3" class="completed-message" style="display:none;">Задание выполнено</span>
+        </li>
     </ul>
     
     <script src="https://thecode.media/wp-content/uploads/2019/12/snowfall2020.js"></script>
@@ -224,7 +229,7 @@
                 return;
             }
 
-            const rewardAmount = 5000; // Reward is 5000 clicks per task
+            const rewardAmount = taskId === 'claimGramAdvanceChat' ? 3000 : 5000; // Reward based on task
             count += rewardAmount;
             completedTasks[taskId] = true; // Mark the task as completed
 
@@ -266,6 +271,10 @@
             if (completedTasks['task2']) {
                 document.getElementById('task2').querySelector('button').style.display = 'none'; // Hide button
                 document.getElementById('completedMessage2').style.display = 'block'; // Show "completed" message
+            }
+            if (completedTasks['task3']) {
+                document.getElementById('task3').querySelector('button').style.display = 'none'; // Hide button
+                document.getElementById('completedMessage3').style.display = 'block'; // Show "completed" message
             }
         }
 
