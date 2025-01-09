@@ -246,8 +246,8 @@
         Вывод
     </div>
 
-    <div class="notification" id="notification">
-        Вывод в разработке
+    <div class="withdraw-button" id="withdrawButton" onclick="redirectToVivod()">
+        Вывод
     </div>
 
     <div class="task-button" id="taskButton" onclick="openTaskMenu()">
@@ -259,6 +259,9 @@
     </div>
 
     <script>
+        function redirectToVivod() {
+        window.location.href = "vivod.html";  // Redirects to vivod.html
+    }  
         let count = parseInt(localStorage.getItem('count')) || 0;
         let energy = parseInt(localStorage.getItem('energy')) || 1000;
         const maxEnergy = 1000;
