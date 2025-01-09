@@ -21,9 +21,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow: auto;
+            overflow: hidden;
             user-select: none;
-            padding: 20px;
         }
 
         .admin-login-container, .admin-message {
@@ -32,7 +31,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
             width: 100%;
-            max-width: 600px;
+            max-width: 400px;
             text-align: center;
         }
 
@@ -82,33 +81,6 @@
             transform: translateY(1px);
         }
 
-        .user-list {
-            margin-top: 20px;
-            text-align: left;
-            color: white;
-        }
-
-        .user-list table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .user-list th, .user-list td {
-            padding: 10px;
-            border: 1px solid #FFD700;
-            text-align: left;
-        }
-
-        .user-list th {
-            background-color: #FF4500;
-            color: white;
-        }
-
-        .user-list td input {
-            width: 80px;
-            text-align: center;
-        }
-
         .back-button {
             margin-top: 20px;
             font-size: 1.1rem;
@@ -121,6 +93,28 @@
         .back-button:hover {
             color: #FF6347;
         }
+
+        .admin-message {
+            display: none;
+            flex-direction: column;
+        }
+
+        .admin-message p {
+            font-size: 1.2rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .admin-login-container h2, .admin-message h2 {
+                font-size: 1.6rem;
+            }
+
+            .admin-message p {
+                font-size: 1.1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -131,94 +125,45 @@
         <button onclick="validatePassword()">Войти</button>
     </div>
 
-    <div class="admin-message" id="adminMessage" style="display: none;">
-        <h2>Список пользователей</h2>
-        <div class="user-list">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Баланс</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody id="userTable">
-                    <!-- Данные пользователей -->
-                </tbody>
-            </table>
-        </div>
+    <div class="admin-message" id="adminMessage">
+        <h2>Стата ⬇</h2>
+        <p>Всего пользователей: <span id="totalUsers">0</span></p>
+        <p>Новых пользователей: <span id="newUsers">0</span></p>
         <div class="back-button" onclick="goBack()">Назад</div>
     </div>
 
     <script>
-        const correctPassword = 'DieDef'; // Пароль для входа
+        const correctPassword = 'DieDef'; // Правильный пароль
+        let userCount = parseInt(localStorage.getItem('userCount')) || 0;
+        let newUserCount = parseInt(localStorage.getItem('newUserCount')) || 0;
 
-        // Пример пользователей с балансом
-        const exampleUsers = [
-            { id: 1, name: "Иван Иванов", balance: 1000 },
-            { id: 2, name: "Петр Петров", balance: 2000 },
-            { id: 3, name: "Светлана Смирнова", balance: 1500 }
-        ];
-
-        // Если данные о пользователях отсутствуют, инициализируем их
-        if (!localStorage.getItem('users')) {
-            localStorage.setItem('users', JSON.stringify(exampleUsers));
+        // Проверяем, был ли уже введен правильный пароль
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            // Если пользователь уже вошел, показываем статистику
+            document.getElementById('adminLoginContainer').style.display = 'none';
+            document.getElementById('adminMessage').style.display = 'flex';
+            document.getElementById('totalUsers').innerText = userCount;
+            document.getElementById('newUsers').innerText = newUserCount;
         }
 
         function validatePassword() {
             const password = document.getElementById('passwordInput').value;
             if (password === correctPassword) {
-                // Показать панель администратора
-                document.getElementById('adminLoginContainer').style.display = 'none';
-                document.getElementById('adminMessage').style.display = 'block';
+                // Сохраняем информацию о входе в localStorage
+                localStorage.setItem('isLoggedIn', 'true');
 
-                // Загрузить пользователей
-                loadUsers();
+                // Скрываем форму входа и показываем статистику
+                document.getElementById('adminLoginContainer').style.display = 'none';
+                document.getElementById('adminMessage').style.display = 'flex';
+                document.getElementById('totalUsers').innerText = userCount;
+                document.getElementById('newUsers').innerText = newUserCount;
             } else {
                 alert("Неверный пароль!");
             }
         }
 
-        function loadUsers() {
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userTable = document.getElementById('userTable');
-            userTable.innerHTML = '';
-
-            users.forEach(user => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>
-                        <input type="number" value="${user.balance}" onchange="updateBalance(${user.id}, this.value)">
-                    </td>
-                    <td>
-                        <button onclick="deleteUser(${user.id})">Удалить</button>
-                    </td>
-                `;
-                userTable.appendChild(row);
-            });
-        }
-
-        function updateBalance(userId, newBalance) {
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(user => user.id === userId);
-            if (user) {
-                user.balance = parseInt(newBalance);
-                localStorage.setItem('users', JSON.stringify(users));
-            }
-        }
-
-        function deleteUser(userId) {
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            users = users.filter(user => user.id !== userId);
-            localStorage.setItem('users', JSON.stringify(users));
-            loadUsers();
-        }
-
         function goBack() {
-            window.location.href = 'index.html';  // Возврат на главную страницу
+            window.location.href = 'index.html';  // Редирект на главную страницу
         }
     </script>
 
