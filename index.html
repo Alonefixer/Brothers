@@ -27,34 +27,6 @@
             transition: background 0.5s ease;
         }
 
-        /* Маленькая кнопка для админа, расположенная в левом верхнем углу */
-        .admin-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #4CAF50, #2E8B57);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .admin-button:hover {
-            background: linear-gradient(45deg, #3CB371, #2E8B57);
-        }
-
-        .admin-button:active {
-            transform: scale(0.95);
-        }
-
         .coin {
             width: 240px;
             height: 240px;
@@ -247,9 +219,6 @@
 
     <div class="energy" id="energy">1000</div>
 
-    <!-- Кнопка админа в левом верхнем углу -->
-    <div class="admin-button" id="adminButton" onclick="redirectToAdminPage()">Админ</div>
-
     <div class="withdraw-button" id="withdrawButton1" onclick="showNotification()">Вывод</div>
     <div class="withdraw-button" id="withdrawButton2" onclick="redirectToVivod()">Вывод</div>
 
@@ -265,18 +234,6 @@
     </div>
 
     <script>
-        // Проверка, является ли пользователь администратором
-        const isAdmin = localStorage.getItem('isAdmin') === 'true'; // Например, если в localStorage есть такой флаг
-
-        // Отображение кнопки администратора
-        if (isAdmin) {
-            document.getElementById('adminButton').style.display = 'flex';
-        }
-
-        function redirectToAdminPage() {
-            window.location.href = 'admin.html'; // Редирект на страницу администратора
-        }
-
         // Сохраненный код JavaScript для работы кнопок и элементов
         function redirectToVivod() {
             window.location.href = "vivod.html"; 
