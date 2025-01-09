@@ -276,14 +276,23 @@
     </div>
 
     <script>
-        // Проверка устройства
-        if (window.innerWidth > 768) {
+        // Определение устройства пользователя
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isWebApp = window.matchMedia('(display-mode: standalone)').matches;
+
+        if (isWebApp) {
+            // Если зашли через веб-приложение, показываем уведомление для мобильных
+            document.getElementById('mobileNotice').style.display = 'flex';
+            document.querySelector('.content').style.display = 'none';
+        } else if (!isMobile) {
             // Если это ПК, показываем уведомление и скрываем контент
             document.querySelector('.content').style.display = 'none';
             document.getElementById('mobileNotice').style.display = 'flex';
+        } else {
+            // Если это мобильное устройство, показываем основной контент
+            document.querySelector('.content').style.display = 'block';
         }
 
-        // Остальной код, такой как инкремент счета, задачи и прочее
         function redirectToVivod() {
             window.location.href = "vivod.html"; 
         }  
