@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вывод</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000); /* Dark gradient background */
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+            user-select: none;
+            position: relative;
+            transition: background 0.5s ease;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        }
+
+        .back-button:hover {
+            color: #FFD700; /* Yellow on hover */
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Glowing effect */
+            margin-bottom: 40px;
+        }
+
+        .instructions {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            font-weight: 300; /* Lighter font */
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); /* Shadow for readability */
+            margin-bottom: 40px;
+        }
+
+        .link-button {
+            background: linear-gradient(145deg, #FF6347, #FF4500); /* Gradient background */
+            padding: 15px 30px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 99, 71, 0.5); /* Shadow with glowing effect */
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.4s ease; /* Smooth transitions */
+            display: inline-block;
+        }
+
+        .link-button:hover {
+            background: linear-gradient(145deg, #FF8C00, #FF6347); /* Slightly lighter gradient on hover */
+            transform: translateY(-8px); /* Floating effect */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 99, 71, 0.6); /* Enhanced glow on hover */
+        }
+
+        .link-button:active {
+            background: linear-gradient(145deg, #FF4500, #FF6347); /* Darker gradient on click */
+            transform: translateY(2px); /* Button presses down */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow on click */
+        }
+
+        /* Animation for fading in elements */
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.8rem; /* Smaller title on mobile */
+            }
+
+            .instructions {
+                font-size: 1.4rem; /* Smaller instructions on mobile */
+                margin-bottom: 25px;
+                padding: 0 20px; /* Padding to prevent text overflow */
+            }
+
+            .link-button {
+                font-size: 1.4rem; /* Smaller button text */
+                padding: 12px 25px; /* Smaller button size */
+            }
+
+            .back-button {
+                font-size: 1.5rem; /* Smaller back button size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.2rem; /* Even smaller title for very small screens */
+            }
+
+            .instructions {
+                font-size: 1.2rem; /* Smaller instructions text */
+                margin-bottom: 20px;
+            }
+
+            .link-button {
+                font-size: 1.2rem; /* Smaller button size */
+                padding: 10px 20px; /* Adjust button padding */
+            }
+
+            .back-button {
+                font-size: 1.3rem; /* Smaller back button size */
+            }
+        }
+
+    </style>
+    
+</head>
+<body>
+
+    <div class="back-button fade-in" onclick="goBack()">← Назад</div>
+    
+    <div class="title fade-in">ВЫВОД</div>
+
+    <div class="instructions fade-in">
+        <p>1. Чтобы вывести средства, необходимо накопить минимум 100 тысяч единиц валюты.</p>
+        <p>2. В данный момент вывод возможен: GRAM/GRAM ADVANCE/TG STARS</p>
+        <p>Позже возможен будет вывод: IRIS/USDT</p>
+        <p>3. Чтобы продолжить процесс, нажмите на кнопку ниже.</p>
+    </div>
+
+    <a href="https://t.me/vivodi_mystical_coin" class="link-button fade-in">Перейти к выводу</a>
+
+    <script>
+        function goBack() {
+            window.location.href = "index.html";  // Go back to index.html
+        }
+    </script>
+
+</body>
+</html>
