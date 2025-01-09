@@ -27,6 +27,42 @@
             transition: background 0.5s ease;
         }
 
+        .content {
+            display: block; /* По умолчанию показываем весь контент */
+        }
+
+        .mobile-notice {
+            display: none; /* По умолчанию скрываем блок для ПК */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-notice img {
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                display: block; /* Показываем контент для мобильных */
+            }
+
+            .mobile-notice {
+                display: none; /* Прячем блок с уведомлением на мобильных */
+            }
+        }
+
         .coin {
             width: 240px;
             height: 240px;
@@ -213,30 +249,41 @@
 </head>
 <body>
 
-    <div class="counter" id="counter">0</div>
+    <div class="content">
+        <!-- Основной контент (кликер) -->
+        <div class="counter" id="counter">0</div>
+        <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
+        <div class="energy" id="energy">1000</div>
+        <div class="withdraw-button" id="withdrawButton1" onclick="showNotification()">Вывод</div>
+        <div class="withdraw-button" id="withdrawButton2" onclick="redirectToVivod()">Вывод</div>
+        <div class="task-button" id="taskButton1" onclick="openTaskMenu()">Задание</div>
+        <div class="task-button" id="taskButton2" onclick="redirectToSadanie()">Задание</div>
 
-    <div class="coin" id="coin" onclick="incrementCounter(event)"></div>
+        <div class="notification" id="notification">Вывод денег</div>
 
-    <div class="energy" id="energy">1000</div>
-
-    <div class="withdraw-button" id="withdrawButton1" onclick="showNotification()">Вывод</div>
-    <div class="withdraw-button" id="withdrawButton2" onclick="redirectToVivod()">Вывод</div>
-
-    <div class="task-button" id="taskButton1" onclick="openTaskMenu()">Задание</div>
-    <div class="task-button" id="taskButton2" onclick="redirectToSadanie()">Задание</div>
-
-    <div class="notification" id="notification">Вывод денег</div>
-
-    <div class="task-menu" id="taskMenu">
-        <div class="close-btn" onclick="closeTaskMenu()">×</div>
-        <h2>Задания</h2>
-        <p>Сделайте что-то, чтобы получить бонус!</p>
+        <div class="task-menu" id="taskMenu">
+            <div class="close-btn" onclick="closeTaskMenu()">×</div>
+            <h2>Задания</h2>
+            <p>Сделайте что-то, чтобы получить бонус!</p>
+        </div>
     </div>
 
-    <script src="https://thecode.media/wp-content/uploads/2019/12/snowfall2020.js"></script>
+    <!-- Уведомление для пользователей на ПК -->
+    <div class="mobile-notice" id="mobileNotice">
+        <h2>Пожалуйста, зайдите с телефона!</h2>
+        <p>Для полноценного доступа сканируйте QR-код ниже:</p>
+        <img src="assets/ur.jpg" alt="QR Code">
+    </div>
 
     <script>
-        // Сохраненный код JavaScript для работы кнопок и элементов
+        // Проверка устройства
+        if (window.innerWidth > 768) {
+            // Если это ПК, показываем уведомление и скрываем контент
+            document.querySelector('.content').style.display = 'none';
+            document.getElementById('mobileNotice').style.display = 'flex';
+        }
+
+        // Остальной код, такой как инкремент счета, задачи и прочее
         function redirectToVivod() {
             window.location.href = "vivod.html"; 
         }  
@@ -298,7 +345,7 @@
 
         document.getElementById('counter').innerText = count;
         updateEnergyDisplay();
-    </script>     
+    </script>
 
 </body>
 </html>
