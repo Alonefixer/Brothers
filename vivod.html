@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000); /* Dark gradient background */
+            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000); 
             color: white;
             height: 100vh;
             display: flex;
@@ -37,11 +37,11 @@
             color: white;
             cursor: pointer;
             transition: color 0.3s ease;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
         }
 
         .back-button:hover {
-            color: #FFD700; /* Yellow on hover */
+            color: #FFD700;
         }
 
         .title {
@@ -50,22 +50,22 @@
             margin-bottom: 30px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Glowing effect */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
             margin-bottom: 40px;
         }
 
         .instructions {
             font-size: 1.6rem;
             line-height: 1.6;
-            font-weight: 300; /* Lighter font */
+            font-weight: 300;
             max-width: 800px;
             margin: 0 auto;
-            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); /* Shadow for readability */
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); 
             margin-bottom: 40px;
         }
 
         .link-button {
-            background: linear-gradient(145deg, #FF6347, #FF4500); /* Gradient background */
+            background: linear-gradient(145deg, #FF6347, #FF4500);
             padding: 15px 30px;
             font-size: 1.6rem;
             font-weight: bold;
@@ -73,24 +73,23 @@
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 99, 71, 0.5); /* Shadow with glowing effect */
-            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.4s ease; /* Smooth transitions */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 99, 71, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.4s ease;
             display: inline-block;
         }
 
         .link-button:hover {
-            background: linear-gradient(145deg, #FF8C00, #FF6347); /* Slightly lighter gradient on hover */
-            transform: translateY(-8px); /* Floating effect */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 99, 71, 0.6); /* Enhanced glow on hover */
+            background: linear-gradient(145deg, #FF8C00, #FF6347);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 99, 71, 0.6);
         }
 
         .link-button:active {
-            background: linear-gradient(145deg, #FF4500, #FF6347); /* Darker gradient on click */
-            transform: translateY(2px); /* Button presses down */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow on click */
+            background: linear-gradient(145deg, #FF4500, #FF6347);
+            transform: translateY(2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animation for fading in elements */
         .fade-in {
             animation: fadeIn 1s ease-in-out forwards;
         }
@@ -106,48 +105,46 @@
             }
         }
 
-        /* Mobile responsiveness */
         @media (max-width: 768px) {
             .title {
-                font-size: 2.8rem; /* Smaller title on mobile */
+                font-size: 2.8rem;
             }
 
             .instructions {
-                font-size: 1.4rem; /* Smaller instructions on mobile */
+                font-size: 1.4rem;
                 margin-bottom: 25px;
-                padding: 0 20px; /* Padding to prevent text overflow */
+                padding: 0 20px;
             }
 
             .link-button {
-                font-size: 1.4rem; /* Smaller button text */
-                padding: 12px 25px; /* Smaller button size */
+                font-size: 1.4rem;
+                padding: 12px 25px;
             }
 
             .back-button {
-                font-size: 1.5rem; /* Smaller back button size */
+                font-size: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .title {
-                font-size: 2.2rem; /* Even smaller title for very small screens */
+                font-size: 2.2rem;
             }
 
             .instructions {
-                font-size: 1.2rem; /* Smaller instructions text */
+                font-size: 1.2rem;
                 margin-bottom: 20px;
             }
 
             .link-button {
-                font-size: 1.2rem; /* Smaller button size */
-                padding: 10px 20px; /* Adjust button padding */
+                font-size: 1.2rem;
+                padding: 10px 20px;
             }
 
             .back-button {
-                font-size: 1.3rem; /* Smaller back button size */
+                font-size: 1.3rem;
             }
         }
-
     </style>
     
 </head>
@@ -170,7 +167,7 @@
 
     <script>
         function goBack() {
-            window.location.href = "index.html";  // Go back to index.html
+            window.location.href = "index.html"; 
         }
     </script>
 
