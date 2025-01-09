@@ -240,6 +240,7 @@
         function redirectToVivod() {
             window.location.href = "vivod.html"; 
         }  
+
         let count = parseInt(localStorage.getItem('count')) || 0;
         let energy = parseInt(localStorage.getItem('energy')) || 1000;
         const maxEnergy = 1000;
@@ -256,7 +257,7 @@
 
         function incrementCounter() {
             if (energy > 0) {
-                count++;
+                count += 2;  // Increment the count by 2 instead of 1
                 energy--;
                 document.getElementById('counter').innerText = count;
                 updateEnergyDisplay();
