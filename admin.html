@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ Панель</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #3b0b0b, #5b1010, #8b0000);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            user-select: none;
+            transition: background 0.5s ease;
+        }
+
+        .admin-login-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .admin-login-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .admin-login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #FF4500;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .admin-login-container input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            outline: none;
+            border-color: #FF6347;
+        }
+
+        .admin-login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF6347;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .admin-login-container button:hover {
+            background-color: #FF7F50;
+            transform: translateY(-3px);
+        }
+
+        .admin-login-container button:active {
+            transform: translateY(1px);
+        }
+
+        .back-button {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #FFD700;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #FF6347;
+        }
+
+        .admin-message {
+            margin-top: 30px;
+            font-size: 1.4rem;
+            color: #FFD700;
+            font-weight: bold;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="admin-login-container" id="adminLoginContainer">
+        <h2>Вход в Админ Панель</h2>
+        <input type="password" id="passwordInput" placeholder="Введите пароль">
+        <button onclick="validatePassword()">Войти</button>
+        <div class="back-button" onclick="goBack()">Назад</div>
+    </div>
+
+    <div class="admin-message" id="adminMessage" style="display: none;">
+        <h3>Стата ⬇</h3>
+        <p>Всего пользователей: <span id="totalUsers">0</span></p>
+        <p>Новых пользователей: <span id="newUsers">0</span></p>
+    </div>
+
+    <script>
+        const correctPassword = 'Die';
+        let userCount = parseInt(localStorage.getItem('userCount')) || 0;
+        let newUserCount = parseInt(localStorage.getItem('newUserCount')) || 0;
+        const visitedUsers = JSON.parse(localStorage.getItem('visitedUsers')) || new Set();
+
+        // Проверяем, был ли уже введен правильный пароль
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            // Если пользователь уже вошел, скрываем форму и показываем статистику
+            document.getElementById('adminLoginContainer').style.display = 'none';
+            document.getElementById('adminMessage').style.display = 'block';
+            document.getElementById('totalUsers').innerText = userCount;
+            document.getElementById('newUsers').innerText = newUserCount;
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === correctPassword) {
+                // Если пароль правильный, сохраняем информацию о том, что пользователь вошел
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                // Создаем уникальный идентификатор для каждого пользователя
+                const userId = generateUserId();
+
+                // Проверяем, был ли этот пользователь ранее
+                if (!visitedUsers.has(userId)) {
+                    // Если это новый пользователь, увеличиваем счетчик новых пользователей
+                    newUserCount++;
+                    visitedUsers.add(userId);
+                    localStorage.setItem('visitedUsers', JSON.stringify(Array.from(visitedUsers)));  // Сохраняем список уникальных пользователей
+                }
+
+                // Увеличиваем общее количество пользователей
+                userCount++;
+
+                // Сохраняем данные в localStorage
+                localStorage.setItem('userCount', userCount);
+                localStorage.setItem('newUserCount', newUserCount);
+
+                // Скрываем форму входа и показываем статистику
+                document.getElementById('adminLoginContainer').style.display = 'none';
+                document.getElementById('adminMessage').style.display = 'block';
+                document.getElementById('totalUsers').innerText = userCount;
+                document.getElementById('newUsers').innerText = newUserCount;
+            } else {
+                // Если пароль неверный, редирект на страницу index.html
+                alert("Неверный пароль!");
+                window.location.href = 'index.html';
+            }
+        }
+
+        function generateUserId() {
+            // Генерируем уникальный идентификатор пользователя на основе текущего времени
+            return 'user_' + new Date().getTime();
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+</html>
