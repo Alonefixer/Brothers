@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание - В разработке</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"> <!-- FontAwesome icons -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, rgba(255, 94, 77, 1) 0%, rgba(255, 14, 14, 1) 70%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            user-select: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .message-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .message-container h2 {
+            font-size: 2rem;
+            color: #f5a623;
+            margin-bottom: 20px;
+        }
+
+        .message-container p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        #footer-bar {
+            position: absolute;
+            bottom: 1px;
+            width: 100%;
+            background-color: black;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .footer-icon {
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .footer-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .message-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            #footer-bar {
+                padding: 8px 0;
+            }
+
+            .footer-icon {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Страница в разработке</h1>
+    
+    <div class="message-container">
+        <h2>Мы работаем над этим!</h2>
+        <p>Эта страница или функционал находится в процессе разработки. Пожалуйста, вернитесь позже.</p>
+    </div>
+
+    <div id="footer-bar">
+        <div class="footer-icon" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i> <!-- Home Icon -->
+        </div>
+        <div class="footer-icon" onclick="window.location.href='ulu.html'">
+            <i class="fas fa-cogs"></i> <!-- Upgrade Icon -->
+        </div>
+        <div class="footer-icon" onclick="window.location.href='vivod.html'">
+            <i class="fas fa-file-alt"></i> <!-- Output Icon -->
+        </div>
+        <div class="footer-icon" onclick="alert('Вы уже на странице разработки!')">
+            <i class="fas fa-tasks"></i> <!-- Task Icon -->
+        </div>
+    </div>
+
+</body>
+</html>

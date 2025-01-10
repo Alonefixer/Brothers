@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вывод средств</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"> <!-- FontAwesome icons -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, rgba(255, 94, 77, 1) 0%, rgba(255, 14, 14, 1) 70%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            user-select: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .balance-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .balance-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .balance-container p {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .withdraw-button {
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, rgba(255, 94, 77, 1), rgba(255, 14, 14, 1));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .withdraw-button:hover {
+            background: linear-gradient(135deg, rgba(255, 94, 77, 1), rgba(255, 50, 0, 1));
+            transform: scale(1.05);
+        }
+
+        .withdraw-button:active {
+            background: linear-gradient(135deg, rgba(255, 94, 77, 1), rgba(255, 14, 14, 1));
+            transform: scale(0.98);
+        }
+
+        #footer-bar {
+            position: absolute;
+            bottom: 1px;
+            width: 100%;
+            background-color: black;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .footer-icon {
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .footer-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .balance-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .balance-container h2 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+
+            .balance-container p {
+                font-size: 1.1rem;
+            }
+
+            .withdraw-button {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+            }
+
+            #footer-bar {
+                padding: 8px 0;
+            }
+
+            .footer-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Additional mobile-friendly style for smaller screens */
+        @media (max-width: 400px) {
+            .withdraw-button {
+                font-size: 1rem;
+                padding: 8px 18px;
+            }
+
+            .footer-icon {
+                font-size: 1.3rem;
+            }
+
+            .balance-container p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Вывод средств</h1>
+    
+    <div class="balance-container">
+        <h2>Ваши инструкции для вывода средств:</h2>
+        
+        <p>1. Чтобы вывести средства, необходимо накопить минимум 100 тысяч единиц валюты.</p>
+        <p>2. В данный момент вывод возможен: GRAM/GRAM ADVANCE/TG STARS</p>
+        <p>Позже возможен будет вывод: IRIS/USDT</p>
+        <p>3. Чтобы продолжить процесс, нажмите на кнопку ниже.</p>
+        
+        <a href="https://t.me/vivodi_mystical_coin" target="_blank">
+            <button class="withdraw-button">Перейти к выводу</button>
+        </a>
+    </div>
+
+    <div id="footer-bar">
+        <div class="footer-icon" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i> <!-- Home Icon -->
+        </div>
+        <div class="footer-icon" onclick="window.location.href='ulu.html'">
+            <i class="fas fa-cogs"></i> <!-- Upgrade Icon -->
+        </div>
+        <div class="footer-icon" onclick="window.location.href='sadanie.html'">
+            <i class="fas fa-book"></i> <!-- Assignment Icon -->
+        </div>
+        <div class="footer-icon" onclick="window.location.href='vivod.html'">
+            <i class="fas fa-chart-line"></i> <!-- Output Icon -->
+        </div>
+    </div> 
+
+</body>
+</html>
