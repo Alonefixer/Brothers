@@ -20,47 +20,6 @@
             user-select: none;
         }
 
-        #nickname-container {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            width: 80%;
-            max-width: 400px;
-        }
-
-        #nickname-input {
-            padding: 10px;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            border: none;
-            margin-bottom: 10px;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        #save-nickname {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            background-color: #FFD700;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #save-nickname:hover {
-            background-color: #FFA500;
-        }
-
         #counter {
             position: absolute;
             top: 20px;
@@ -229,12 +188,6 @@
         </div>
     </div>
 
-    <div id="nickname-container">
-        <h2>Введите ваш ник</h2>
-        <input type="text" id="nickname-input" placeholder="Ваш ник" />
-        <button id="save-nickname">Начать игру</button>
-    </div>
-
     <div id="counter">0</div>
     <div id="coin" onclick="handleCoinClick()"></div>
     <div id="energy-container">
@@ -265,46 +218,26 @@
         const maxEnergy = 1000;
         const energyText = document.getElementById('energy-text');
         const energyBar = document.getElementById('energy-bar');
-        const nicknameInput = document.getElementById('nickname-input');
-        const nicknameContainer = document.getElementById('nickname-container');
-        const saveNicknameButton = document.getElementById('save-nickname');
         const savedNickname = localStorage.getItem('nickname');
 
         // Проверка устройства (мобильное или ПК)
         function checkDevice() {
             if (window.innerWidth <= 600) {
                 // Мобильное устройство
-                nicknameContainer.style.display = 'block';
                 document.getElementById('pc-warning').style.display = 'none';
+                document.getElementById('counter').style.display = 'block';
+                document.getElementById('coin').style.display = 'block';
+                document.getElementById('energy-container').style.display = 'block';
+                document.getElementById('footer-bar').style.display = 'flex';
             } else {
                 // ПК
                 document.getElementById('pc-warning').style.display = 'flex';
-                nicknameContainer.style.display = 'none';
             }
         }
 
-        if (savedNickname) {
-            startGame(savedNickname);
+        function startGame() {
+            alert('Привет! Начни игру!');
         }
-
-        function startGame(nickname) {
-            nicknameContainer.style.display = 'none';
-            document.getElementById('counter').style.display = 'block';
-            document.getElementById('coin').style.display = 'block';
-            document.getElementById('energy-container').style.display = 'block';
-            document.getElementById('footer-bar').style.display = 'flex';
-            alert('Привет, ' + nickname + '! Начни игру!');
-        }
-
-        saveNicknameButton.onclick = function() {
-            const nickname = nicknameInput.value.trim();
-            if (nickname) {
-                localStorage.setItem('nickname', nickname);
-                startGame(nickname);
-            } else {
-                alert('Пожалуйста, введите ник!');
-            }
-        };
 
         function updateLocalStorage() {
             localStorage.setItem('coinCount', coinCount);
